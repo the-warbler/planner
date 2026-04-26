@@ -29,3 +29,4 @@ export const Download = (p: SVGProps<SVGSVGElement>) => <svg {...base(p)}><path 
 export const Upload = (p: SVGProps<SVGSVGElement>) => <svg {...base(p)}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>;
 export const Sparkle = (p: SVGProps<SVGSVGElement>) => <svg {...base(p)}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></svg>;
 export const Flag = (p: SVGProps<SVGSVGElement>) => <svg {...base(p)}><path d="M4 22V4a1 1 0 0 1 1-1h11l-2 4 2 4H5"/></svg>;
+export const Archive = (p: SVGProps<SVGSVGElement>) => <svg {...base(p)}><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg>;

@@ -118,6 +118,13 @@ export function useStore() {
     return out;
   };
 
+  const setTaskTreeDone = (task: Task, done: boolean, completedAt?: number): Task => ({
+    ...task,
+    done,
+    completedAt: done ? completedAt : undefined,
+    subtasks: task.subtasks.map(sub => setTaskTreeDone(sub, done, completedAt)),
+  });
+
   const addTask = (projectId: string, parentTaskId: string | null, task: Omit<Task, 'id' | 'createdAt' | 'subtasks' | 'done'>) => {
     const newTask: Task = { ...task, id: uid(), createdAt: Date.now(), subtasks: [], done: false };
     update(s => ({
@@ -153,11 +160,21 @@ export function useStore() {
   };
 
   const toggleTask = (projectId: string, taskId: string) => {
+    const completedAt = Date.now();
     update(s => ({
       ...s,
       projects: s.projects.map(p => {
         if (p.id !== projectId) return p;
-        return { ...p, tasks: mapTasks(p.tasks, t => t.id === taskId ? { ...t, done: !t.done, completedAt: !t.done ? Date.now() : undefined } : t) };
+        return {
+          ...p,
+          tasks: mapTasks(p.tasks, t => {
+            if (t.id !== taskId) return t;
+            const nextDone = !t.done;
+            return nextDone
+              ? setTaskTreeDone(t, true, completedAt)
+              : { ...t, done: false, completedAt: undefined };
+          })
+        };
       })
     }));
   };

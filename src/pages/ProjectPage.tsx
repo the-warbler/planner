@@ -8,6 +8,7 @@ import { daysUntil, formatRelative, formatNice } from '../utils/dates';
 interface Props { store: Store; projectId: string; back: () => void; }
 
 const EMOJIS = ['☁️','✨','🌙','🌿','🔮','🎨','📚','💼','🏃','🧠','🎯','🌊','🍃','🪴','🧘','🎵','🔥','💡','🌸','🍂'];
+const COLORS = ['#7c6cf6','#10b981','#f59e0b','#ef4444','#06b6d4','#ec4899','#8b5cf6','#84cc16'];
 
 export function ProjectPage({ store, projectId, back }: Props) {
   const project = store.state.projects.find(p => p.id === projectId);
@@ -165,6 +166,16 @@ export function ProjectPage({ store, projectId, back }: Props) {
 
             <label className="text-xs font-medium mt-4 block" style={{ color: 'var(--ink-soft)' }}>Deadline</label>
             <input type="date" className="input mt-1" value={pDraft.deadline} onChange={e => setPDraft({ ...pDraft, deadline: e.target.value })} />
+
+            <label className="text-xs font-medium mt-4 block" style={{ color: 'var(--ink-soft)' }}>Color</label>
+            <div className="flex gap-2 mt-1">
+              {COLORS.map(c => (
+                <button key={c} onClick={() => setPDraft({ ...pDraft, color: c })}
+                        className={`w-8 h-8 rounded-full transition ${pDraft.color === c ? 'ring-2 ring-offset-2' : ''}`}
+                        style={{ background: c, '--tw-ring-color': c } as any}
+                        aria-label={`Use ${c} as project color`} />
+              ))}
+            </div>
 
             <div className="flex gap-2 mt-6">
               <button className="btn flex-1" onClick={() => setEditingProject(false)}>Cancel</button>
